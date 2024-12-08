@@ -1,0 +1,26 @@
+{
+  "status": 200,
+  "data": [
+    {
+      "id": "course-template",
+      "title": "Course Template",
+      "description": "Perfect for creating structured course content with modules, lessons, and assignments",
+      "tags": ["education", "course"],
+      "features": ["Syllabus", "Assignments", "Gradebook"]
+    },
+    {
+      "id": "portfolio",
+      "title": "Professional Portfolio",
+      "description": "Showcase your work and achievements with a clean, modern portfolio layout",
+      "tags": ["portfolio", "professional"],
+      "features": ["Project Gallery", "Resume", "Contact Form"]
+    },
+    {
+      "id": "research-lab",
+      "title": "Research Lab",
+      "description": "Share research findings, publications, and team information",
+      "tags": ["research", "academic"],
+      "features": ["Publications", "Team Profiles", "Research Projects"]
+    }
+  ]
+}

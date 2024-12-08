@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class HaxUseCaseCard extends LitElement {
   static properties = {
@@ -10,13 +11,13 @@ export class HaxUseCaseCard extends LitElement {
     .card {
       background: white;
       border-radius: 8px;
-      border: 1px solid #eee;
+      border: 1px solid var(--ddd-theme-default-potential0);
       padding: 1rem;
       height: 100%;
     }
 
     .card.selected {
-      border-color: #0066cc;
+      border-color: var(--ddd-theme-default-navy80);
     }
 
     .card-title {
@@ -25,13 +26,13 @@ export class HaxUseCaseCard extends LitElement {
     }
 
     .card-description {
-      color: #666;
+      color: var(--ddd-theme-default-potential50);
       margin-bottom: 1rem;
     }
 
     .select-button {
       padding: 0.5rem 1rem;
-      background: #0066cc;
+      background: var(--ddd-theme-default-navy80);
       color: white;
       border: none;
       border-radius: 4px;

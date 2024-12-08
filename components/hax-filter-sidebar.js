@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class HaxFilterSidebar extends LitElement {
   static properties = {
@@ -13,16 +14,16 @@ export class HaxFilterSidebar extends LitElement {
     }
 
     .sidebar {
-      background: white;
+      background-color: var(--ddd-theme-default-background);
       padding: 1rem;
-      border-right: 1px solid #eee;
+      border-right: 1px solid var(--ddd-theme-default-potential0);;
       height: 100%;
     }
 
     .filter-title {
       font-size: 1.2rem;
       margin-bottom: 1rem;
-      color: #333;
+      color: var(--ddd-theme-default-potentialMidnight);
     }
 
     .filter-list {
@@ -39,12 +40,12 @@ export class HaxFilterSidebar extends LitElement {
     }
 
     .filter-item:hover {
-      background: #f5f5f5;
+      background: var(--ddd-theme-default-potential0);
     }
 
     .filter-item.active {
-      background: #e6f0ff;
-      color: #0066cc;
+      background: var(--ddd-theme-default-potential0);
+      color: var(--ddd-theme-default-navy80)
     }
   `;
 

@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import './components/hax-use-case-card.js';
 import './components/hax-filter-sidebar.js';
-import { getAvailableTags, getFilteredUseCases, loadUseCases } from './utils/useCaseUtils.js';
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
+
+
 
 export class HaxUseCaseApp extends LitElement {
   static properties = {
@@ -34,6 +36,41 @@ export class HaxUseCaseApp extends LitElement {
       height: calc(100vh - 64px);
     }
 
+    .sidebar {
+      background: white;
+      padding: 1rem;
+      border-right: 1px solid #eee;
+      height: 100%;
+    }
+
+    .filter-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-item {
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-item:hover {
+      background: #f5f5f5;
+    }
+
+    .filter-item.active {
+      background: #e6f0ff;
+      color: #0066cc;
+    }
+
     .cards-container {
       padding: 1rem;
       display: grid;
@@ -45,22 +82,27 @@ export class HaxUseCaseApp extends LitElement {
 
   constructor() {
     super();
-    this.useCases = [];
+    this.useCases = USE_CASES;
     this.activeFilters = [];
     this.selectedUseCase = null;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.loadData();
+  getAvailableTags() {
+    const tags = new Set();
+    this.useCases.forEach(useCase => {
+      useCase.tags.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags);
   }
 
-  async loadData() {
-    this.useCases = await loadUseCases();
+  getFilteredUseCases() {
+    if (this.activeFilters.length === 0) return this.useCases;
+    return this.useCases.filter(useCase => 
+      useCase.tags.some(tag => this.activeFilters.includes(tag))
+    );
   }
 
-  handleFilterToggle(e) {
-    const tag = e.detail;
+  handleFilterToggle(tag) {
     this.activeFilters = this.activeFilters.includes(tag)
       ? this.activeFilters.filter(t => t !== tag)
       : [...this.activeFilters, tag];
@@ -71,8 +113,8 @@ export class HaxUseCaseApp extends LitElement {
   }
 
   render() {
-    const filteredUseCases = getFilteredUseCases(this.useCases, this.activeFilters);
-    const availableTags = getAvailableTags(this.useCases);
+    const availableTags = this.getAvailableTags();
+    const filteredUseCases = this.getFilteredUseCases();
 
     return html`
       <div class="header">
@@ -80,11 +122,19 @@ export class HaxUseCaseApp extends LitElement {
       </div>
 
       <div class="main-content">
-        <hax-filter-sidebar
-          .availableTags=${availableTags}
-          .activeFilters=${this.activeFilters}
-          @toggle-filter=${this.handleFilterToggle}
-        ></hax-filter-sidebar>
+        <div class="sidebar">
+          <h2 class="filter-title">Filters</h2>
+          <div class="filter-list">
+            ${availableTags.map(tag => html`
+              <div 
+                class="filter-item ${this.activeFilters?.includes(tag) ? 'active' : ''}"
+                @click=${() => this.handleFilterToggle(tag)}
+              >
+                ${tag}
+              </div>
+            `)}
+          </div>
+        </div>
 
         <div class="cards-container">
           ${filteredUseCases.map(useCase => html`
